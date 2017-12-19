@@ -1,0 +1,45 @@
+.error {
+  color: red;
+}
+
+.top25 {
+  margin-top: 25px;
+}
+
+.navbar-header {
+  font-weight: bolder;
+}
+
+.navbar-header i {
+  width: 30px;
+}
+
+.nav.navbar-nav i {
+  width: 20px;
+}
+
+.nav.navbar-nav img {
+  width: 22px;
+  margin-right: 5px;
+  border-radius: 50%;
+  border: 1px solid;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+.fa.fa-no-margin{
+  margin-right: 0;
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover{
+  color: #fff;
+  background-color: #3e3e3e;
+}
+
+.tweet textarea{
+  resize: none;
+}
