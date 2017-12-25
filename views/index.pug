@@ -10,7 +10,8 @@ block content
                         div(class="form-group")
                             textarea(class="form-control", name="content", maxlength="255", required)
                         div(class="form-group")
-                            input(type="file", accept="image/*", name="image")
+                            input(id="new-post-image", type="hidden", name="image")
+                            input(id="new-post-image-input", type="file", accept="image/*", onchange="loadBase64()")
                     div(class="panel-footer text-right")
                         button(class="btn btn-primary btn-sm", type="submit") Wyślij
     each post in posts
@@ -18,10 +19,22 @@ block content
             div(class="col-md-6 col-md-offset-3")
                 div(class="panel panel-default")
                     div(class="panel-heading")
-                        a(href="/users/"+post.user._id)
+                        a(href="/profile/" + post.user._id)
                             strong= post.user.name
                         span(class="pull-right")= post.created
                     div(class="panel-body")
                         if post.image
                             img(src= post.image)
                         p= post.content
+                    div(class="panel-footer")
+                        each comment in post.comments
+                            p
+                                a(href="/profile/"+comment.user._id)
+                                    strong= comment.user.name
+                                span= ` ${comment.content}`
+                    div(class="panel-footer text-right")
+                        form(action="/tweets/comment", method="POST")
+                            input(type="hidden", name="post", value=post._id)
+                            div(class="form-group")
+                                textarea(class="form-control", name="content", maxlength="255", required)
+                            button(class="btn btn-primary btn-sm", type="submit") Komentuj

@@ -5,3 +5,14 @@ window.addEventListener('load', () => {
     if(0 === path.indexOf(it.getAttribute("href")))
       it.parentElement.className += " active";
 });
+
+function loadBase64()
+{
+    let input = document.querySelector("input#new-post-image");
+    let file = document.querySelector("input#new-post-image-input").files[0];
+    let reader = new FileReader();
+
+    reader.addEventListener("load", () => input.value = reader.result);
+
+    if(file) reader.readAsDataURL(file);
+}

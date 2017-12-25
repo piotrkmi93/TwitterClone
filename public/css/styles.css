@@ -43,3 +43,7 @@
 .tweet textarea{
   resize: none;
 }
+
+.tweet img {
+  width: 100%;
+}

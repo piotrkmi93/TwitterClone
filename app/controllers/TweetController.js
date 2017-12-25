@@ -24,5 +24,3 @@ module.exports = () => {
     return self;
 
 };
-
-// TODO: stworzyć skrypt wyciągający base64 z obrazka i to jego wysyłać do metody powyżej

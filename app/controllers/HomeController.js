@@ -7,6 +7,8 @@ module.exports = () => {
         index: (request, response) => {
 
             Post.aggregate([
+
+                // przywołanie autora posta
                 { $lookup: {
                         from: "users",
                         let: { "user_id": "$user" },
@@ -15,17 +17,51 @@ module.exports = () => {
                             { $project: {
                                     "name": { $concat: [ "$first_name", " ", "$last_name" ] },
                                     "avatar": 1
-                            }
+                                }
                             }
                         ],
                         as: "user"
                     }
                 },
+
+                // przywołanie komentarzy do posta
+                { $lookup: {
+                        from: "comments",
+                        let: { "post_id": "$_id" },
+                        pipeline: [
+                            { $match: { $expr: { $eq: [ "$post", "$$post_id" ] } } },
+                            // przywołanie autora komentarza
+                            { $lookup: {
+                                    from: "users",
+                                    let: { "user_id": "$user" },
+                                    pipeline: [
+                                        { $match: { $expr: { $eq: [ "$_id", "$$user_id" ] } } },
+                                        { $project: {
+                                                "name": { $concat: [ "$first_name", " ", "$last_name" ] },
+                                                "avatar": 1
+                                            }
+                                        }
+                                    ],
+                                    as: "user"
+                                }
+                            },
+                            { $project: {
+                                    "_id": 0,
+                                    "content": 1,
+                                    "user": { "$arrayElemAt": [ "$user", 0 ] }
+                                }
+                            }
+                        ],
+                        as: "comments"
+                    }
+                },
+                { $sort: { created: -1 } },
                 { $project: {
                         "content": 1,
                         "created": 1,
                         "updated": 1,
                         "image": 1,
+                        "comments": 1,
                         "user": { "$arrayElemAt": [ "$user", 0 ] }
                     }
                 }
