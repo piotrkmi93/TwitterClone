@@ -24,7 +24,12 @@ let db = mongoose.connect('mongodb://localhost:27017/twitter_clone');
 
 let auth = (request, response, next) => {
     if(request.session && request.session.user) next();
-    return response.redirect('/login');
+    else response.redirect('/login');
+};
+
+let guest = (request, response, next) => {
+    if(!request.session || !request.session.user) next();
+    else response.redirect('/');
 };
 
 app.use((req,res,next) => {
@@ -35,6 +40,6 @@ app.use((req,res,next) => {
 
 // begin app
 
-require('./app/routes')(app, db, auth);
+require('./app/routes')(app, auth, guest);
 
 app.listen(3000);

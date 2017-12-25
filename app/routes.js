@@ -1,4 +1,4 @@
-module.exports = (app, db, auth) => {
+module.exports = (app, auth, guest) => {
 
     // init controllers
 
@@ -9,16 +9,16 @@ module.exports = (app, db, auth) => {
 
     // routes
 
-    app.get('/login', AuthController.get.login);
-    app.get('/register', AuthController.get.register);
+    app.get('/login', guest, AuthController.get.login);
+    app.get('/register', guest, AuthController.get.register);
 
-    app.post('/login', AuthController.post.login);
-    app.post('/register', AuthController.post.register);
+    app.post('/login', guest, AuthController.post.login);
+    app.post('/register', guest, AuthController.post.register);
 
     // for auth only
 
-    app.get('/', auth, HomeController.index);
+    app.post('/tweets/create', auth, TweetController.create);
 
-    // app.post('/tweets/create', TweetController.create);
+    app.get('/', auth, HomeController.index);
 
 };
