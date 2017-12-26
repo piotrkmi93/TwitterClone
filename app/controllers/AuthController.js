@@ -1,6 +1,6 @@
-module.exports = () => {
+let User = require('../models/User');
 
-    let User = require('../models/User');
+module.exports = () => {
 
     let self = {
 
@@ -20,6 +20,12 @@ module.exports = () => {
                     err_code: request.query.err_code,
                     login: request.query.login
                 });
+            },
+
+            logout: (request, response) => {
+                request.session.user = undefined;
+                request.session.save();
+                response.redirect('/login');
             }
 
         },
@@ -71,10 +77,6 @@ module.exports = () => {
                        response.redirect('/login?login=' + login);
                    }
                 });
-            },
-
-            logout: (request, response) => {
-
             }
 
         }

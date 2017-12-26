@@ -6,6 +6,16 @@
   margin-top: 25px;
 }
 
+nav.navbar.navbar-default{
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+.main > *:first-child{
+  margin-top: 64px;
+}
+
 .navbar-header {
   font-weight: bolder;
 }
@@ -44,6 +54,31 @@
   resize: none;
 }
 
+.user img,
 .tweet img {
   width: 100%;
+}
+
+.tweet .btn.btn-danger.btn-xs i{
+  margin: 0 auto;
+}
+
+.tweet .btn.btn-danger.btn-sm{
+  margin-left: 10px;
+}
+
+.row.tweet .panel-heading img{
+  width: 42px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 1px solid;
+  float: left;
+}
+
+.row.tweet .panel-footer.comments img{
+  width: 22px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 1px solid;
+  float: left;
 }

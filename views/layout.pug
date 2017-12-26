@@ -32,11 +32,11 @@ html
                                 if user.avatar
                                     img(src=user.avatar)
                                 else
-                                    img(src=`img/d${user.sex}ua.png`)
-                                span Profil
+                                    img(src=`/img/d${user.sex}ua.png`)
+                                span= user.first_name + ' ' + user.last_name
                         li
                             a(href="/logout")
                                 i(class="fa fa-sign-out")
                                 span Wyloguj
-        div(class="container")
+        div(class="container main")
             block content

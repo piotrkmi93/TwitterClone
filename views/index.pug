@@ -11,29 +11,50 @@ block content
                             textarea(class="form-control", name="content", maxlength="255", required)
                         div(class="form-group")
                             input(id="new-post-image", type="hidden", name="image")
-                            input(id="new-post-image-input", type="file", accept="image/*", onchange="loadBase64()")
+                            input(id="new-post-image-input", type="file", accept="image/*", onchange="loadBase64('new-post-image', 'new-post-image-input')")
                     div(class="panel-footer text-right")
-                        button(class="btn btn-primary btn-sm", type="submit") Wyślij
+                        button(class="btn btn-primary btn-sm", type="submit") Tweetuj
     each post in posts
         div(class="row tweet")
             div(class="col-md-6 col-md-offset-3")
                 div(class="panel panel-default")
                     div(class="panel-heading")
+                        if post.user.avatar
+                            img(src=post.user.avatar)
+                        else
+                            img(src=`/img/d${post.user.sex}ua.png`)
                         a(href="/profile/" + post.user._id)
                             strong= post.user.name
-                        span(class="pull-right")= post.created
+                        br
+                        small= post.created
+                        div(class="pull-right")
+                            if post.user._id == user._id
+                                form(action="/tweets/delete", method="POST")
+                                    input(type="hidden", name="post_id", value=post._id)
+                                    input(type="hidden", name="user_id", value=post.user._id)
+                                    button(class="btn btn-danger btn-xs") Usuń post
                     div(class="panel-body")
                         if post.image
                             img(src= post.image)
                         p= post.content
-                    div(class="panel-footer")
+                    div(class="panel-footer comments")
                         each comment in post.comments
+                            if comment.user._id == user._id
+                                form(action="/comments/delete", method="POST")
+                                    input(type="hidden", name="comment_id", value=comment._id)
+                                    input(type="hidden", name="user_id", value=comment.user._id)
+                                    button(class="btn btn-xs btn-danger pull-right", type="submit")
+                                        i(class="fa fa-times")
+                            if comment.user.avatar
+                                img(src=comment.user.avatar)
+                            else
+                                img(src=`img/d${comment.user.sex}ua.png`)
                             p
                                 a(href="/profile/"+comment.user._id)
                                     strong= comment.user.name
                                 span= ` ${comment.content}`
                     div(class="panel-footer text-right")
-                        form(action="/tweets/comment", method="POST")
+                        form(action="/comments/create", method="POST")
                             input(type="hidden", name="post", value=post._id)
                             div(class="form-group")
                                 textarea(class="form-control", name="content", maxlength="255", required)

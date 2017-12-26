@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    div(class="row user")
+        div(class="col-md-6 col-md-offset-3")
+            div(class="panel panel-default")
+                div(class="panel-body text-center")
+                    if USER.avatar
+                        img(src=USER.avatar)
+                    else
+                        img(src=`/img/d${USER.sex}ua.png`)
+                    h1= USER.first_name + " " + USER.last_name
+                    h5= 'Urodziny: ' + USER.birthday_to_show
+    if(user._id == USER._id)
+        div(class="row")
+            div(class="col-md-6 col-md-offset-3")
+                div(class="panel panel-default")
+                    div(class="panel-heading") Zaktualizuj informacje o sobie
+                    div(class="panel-body")
+                        form(method="POST", action="/profile/update")
+                            label Imię
+                            input(type="text", name="first_name", class="form-control", value=user.first_name)
+                            br
+                            label Nazwisko
+                            input(type="text", name="last_name", class="form-control", value=user.last_name)
+                            br
+                            input(id="new-user-image", type="hidden", name="image")
+                            label Avatar
+                            input(id="new-user-image-input", type="file", accept="image/*", onchange="loadBase64('new-user-image', 'new-user-image-input')")
+                            br
+                            div(class="text-right")
+                                button(type="submit", class="btn btn-sm btn-primary") Zapisz

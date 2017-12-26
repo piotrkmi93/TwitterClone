@@ -6,10 +6,10 @@ window.addEventListener('load', () => {
       it.parentElement.className += " active";
 });
 
-function loadBase64()
+function loadBase64(input_id, file_id)
 {
-    let input = document.querySelector("input#new-post-image");
-    let file = document.querySelector("input#new-post-image-input").files[0];
+    let input = document.querySelector("input#"+input_id);
+    let file = document.querySelector("input#"+file_id).files[0];
     let reader = new FileReader();
 
     reader.addEventListener("load", () => input.value = reader.result);
